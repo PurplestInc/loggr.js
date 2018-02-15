@@ -47,7 +47,7 @@ module.exports = function() {
 		let tempHours = tempDate.getHours();
 		let tempMinutes = tempDate.getMinutes();
 		let tempMonth = tempDate.getMonth();
-		let tempPeriod = ' AM';
+		let tempPeriod = 'AM';
 		let tempSeconds = tempDate.getSeconds();
 		let tempYear = tempDate.getFullYear();
 
@@ -58,7 +58,7 @@ module.exports = function() {
 		tempMilliseconds = zeroify(tempMilliseconds);
 
 		if (tempHours >= 12) {
-			tempPeriod = ' PM';
+			tempPeriod = 'PM';
 		}
 
 		if (tempHours > 12) {
@@ -68,6 +68,11 @@ module.exports = function() {
 		tempHours = zeroify(tempHours);
 
 		let tempTimestamp = tempMonth + '/' + tempDay + '/' + tempYear + ' @ ' + tempHours + ':' + tempMinutes + ':' + tempSeconds + ':' + tempMilliseconds + ' ' + tempPeriod;
+
+		if (typeof log === 'string') {
+			data = log;
+			log = eventLog;
+		}
 
 		if (log === undefined) {
 			log = eventLog;
@@ -84,13 +89,13 @@ module.exports = function() {
 				log.write('[' + tempTimestamp + '] - ' + JSON.stringify(data, undefined, 2) + '\n');
 			} else {
 				console.log('[' + tempTimestamp + '] - ' + data);
-				log.write('[' + tempTimestamp + '] -' + data + '\n');
+				log.write('[' + tempTimestamp + '] - ' + data + '\n');
 			}
 		}
 	};
 
 	return {
-		log: function(log, data, type) {
+		log: function(log = eventLog, data, type) {
 				return loggr(log, data, type);
 		}
 	};

@@ -14,14 +14,18 @@ Used to log data to a write stream while also logging it to the console so that 
 ```javascript
 const fs = require('fs');
 const path = require('path');
+const loggr = require('loggr');
 const accessLog = fs.createWriteStream(path.join(__dirname, 'access.log'), { flags: 'a' });
 
-// Normal
-log(accessLog, data);
+// Default, will log to an event.log file.
+loggr.log(data);
+
+// Normal, pass in a destination WriteStream.
+loggr.log(accessLog, data);
 
 // JSON
-log(accessLog, data, 'json');
+loggr.log(accessLog, data, 'json');
 
 // Pretty printed JSON
-log(accessLog, data, 'pretty');
+loggr.log(accessLog, data, 'pretty');
 ```
