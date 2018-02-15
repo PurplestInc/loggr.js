@@ -1,0 +1,24 @@
+{
+  "name": "loggr.js",
+  "version": "1.0.0",
+  "description": "A simple logging utility.",
+  "main": "loggr.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PurplestInc/loggr.js.git"
+  },
+  "keywords": [
+    "loggr",
+    "logger",
+    "logging",
+    "timestamp",
+    "moment",
+    "precise"
+  ],
+  "author": "Rob Dukarski <rob@purplest.com> (https://github.com/RobDukarski)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/PurplestInc/loggr.js/issues"
+  },
+  "homepage": "https://github.com/PurplestInc/loggr.js#readme"
+}
