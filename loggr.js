@@ -95,8 +95,32 @@ module.exports = function() {
 	};
 
 	return {
-		log: function(log = eventLog, data, type) {
-				return loggr(log, data, type);
+		alert: function(log = eventLog, data, type) {
+			return loggr(log, 'Alert: ' + data, type);
+		},
+		crit: function(log = eventLog, data, type) {
+			return loggr(log, 'Critical: ' + data, type);
+		},
+		debug: function(log = eventLog, data, type) {
+			return loggr(log, 'Debug: ' + data, type);
+		},
+		emerg: function(log = eventLog, data, type) {
+			return loggr(log, 'Emergency: ' + data, type);
+		},
+		err: function(log = eventLog, data, type) {
+			return loggr(log, 'Error: ' + data, type);
+		},
+		info: function(log = eventLog, data, type) {
+			return loggr(log, 'Info: ' + data, type);
+		},
+		log: function (log = eventLog, data, type) {
+			return loggr(log, data, type);
+		},
+		notice: function(log = eventLog, data, type) {
+			return loggr(log, 'Notice: ' + data, type);
+		},
+		warning: function(log = eventLog, data, type) {
+			return loggr(log, 'Warning: ' + data, type);
 		}
 	};
 }();

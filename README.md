@@ -25,6 +25,8 @@ const path = require('path');
 const loggr = require('loggr');
 const accessLog = fs.createWriteStream(path.join(__dirname, 'access.log'), { flags: 'a' });
 
+... // Your code with an variable "data" that has some value.
+
 // Default, will log to an event.log file.
 loggr.log(data);
 

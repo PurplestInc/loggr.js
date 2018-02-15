@@ -1,6 +1,6 @@
 {
-  "name": "@robdukarski/loggr.js",
-  "version": "1.0.0",
+  "name": "loggr.js",
+  "version": "1.0.2",
   "description": "A simple logging utility.",
   "main": "loggr.js",
   "repository": {
