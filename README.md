@@ -63,7 +63,7 @@ Styling the console messages, potentially based on message severity, is possible
 
 ## Roadmap
 
-These are future capabilites that we intend to add to the extension.
+These are future capabilites that we intend to add.
 
 **In Progress**
 

@@ -1,6 +1,6 @@
 {
   "name": "loggr.js",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "A simple logging utility.",
   "main": "loggr.js",
   "repository": {
@@ -12,8 +12,8 @@
     "logger",
     "logging",
     "timestamp",
-    "moment",
-    "precise"
+    "precise",
+    "syslog"
   ],
   "author": "Rob Dukarski <rob@purplest.com> (https://github.com/RobDukarski)",
   "license": "MIT",
