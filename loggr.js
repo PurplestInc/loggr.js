@@ -2,7 +2,7 @@
  * @fileoverview loggr.js a simple logging utility.
  * @author Rob Dukarski <rob@purplest.com>
  * @copyright 2018 Purplest, Inc.
- * @version 1.0.0
+ * @version 1.1.0
  * @exports loggr
  */
 
@@ -15,6 +15,22 @@ module.exports = function() {
   const now = () => process.hrtime(startTime)[1]/1000000;
   const startDate = new Date();
 	const startTime = process.hrtime();
+
+	/**
+	 * Colors for the console.
+	 */
+
+	const alertBG = '\x1b[44m';
+	const critFG = '\x1b[33m';
+	const darkFG = '\x1b[30m';
+	const debugBG = '\x1b[42m';
+	const emergBG = '\x1b[41m';
+	const errorFG = '\x1b[31m';
+	const infoFG = '\x1b[36m';
+	const lightFG = '\x1b[37m';
+	const noticeFG = lightFG;
+	const reset = '\x1b[0m';
+	const warningBG = '\x1b[43m';
 
 	/**
 	 * Adds a zero if necessary.
@@ -34,11 +50,15 @@ module.exports = function() {
    * Logs data.
    * @param {WrtieStream} log - Log to use.
    * @param {Any} data        - Data to log.
+	 * @param {String} format   - Format of the log.
 	 * @param {String} type     - Type of log.
    */
 
-  const loggr = function (log = eventLog, data, type) {
+  const loggr = function (log = eventLog, data, format, type) {
 		let tempDate = startDate;
+		let tempMessage = '';
+		let tempConsoleMessage = '';
+		let tempTimestamp = '';
 
 		tempDate.setMilliseconds(tempDate.getMilliseconds() + now());
 
@@ -55,7 +75,15 @@ module.exports = function() {
 		tempMinutes = zeroify(tempMinutes);
 		tempMonth = zeroify(tempMonth);
 		tempSeconds = zeroify(tempSeconds);
-		tempMilliseconds = zeroify(tempMilliseconds);
+
+
+		if (tempMilliseconds < 100) {
+			if (tempMilliseconds < 10) {
+				tempMilliseconds = '00' + tempMilliseconds;
+			} else {
+				tempMilliseconds = '0' + tempMilliseconds;
+			}
+		}
 
 		if (tempHours >= 12) {
 			tempPeriod = 'PM';
@@ -67,7 +95,7 @@ module.exports = function() {
 
 		tempHours = zeroify(tempHours);
 
-		let tempTimestamp = tempMonth + '/' + tempDay + '/' + tempYear + ' @ ' + tempHours + ':' + tempMinutes + ':' + tempSeconds + ':' + tempMilliseconds + ' ' + tempPeriod;
+		tempTimestamp = tempMonth + '/' + tempDay + '/' + tempYear + ' @ ' + tempHours + ':' + tempMinutes + ':' + tempSeconds + ':' + tempMilliseconds + ' ' + tempPeriod;
 
 		if (typeof log === 'string') {
 			data = log;
@@ -78,49 +106,95 @@ module.exports = function() {
 			log = eventLog;
 		}
 
+		tempMessage = '[' + tempTimestamp + '] -';
+
+		if (format !== undefined && !(format === 'json' || format === 'pretty')) {
+			format = undefined;
+
+			console.log(tempMessage + errorFG + 'Error:' + reset + ' Unrecognized format specified.');
+
+			return false;
+		}
+
 		if (data === undefined) {
-			console.log('[' + tempTimestamp + '] - Error: Nothing to log.');
-		} else {
-			if (type && type === 'json') {
-				console.log('[' + tempTimestamp + '] - ' + JSON.stringify(data));
-				log.write('[' + tempTimestamp + '] - ' + JSON.stringify(data) + '\n');
-			} else if (type && type === 'pretty') {
-				console.log('[' + tempTimestamp + '] - ' + JSON.stringify(data, undefined, 2));
-				log.write('[' + tempTimestamp + '] - ' + JSON.stringify(data, undefined, 2) + '\n');
-			} else {
-				console.log('[' + tempTimestamp + '] - ' + data);
-				log.write('[' + tempTimestamp + '] - ' + data + '\n');
+			console.log(tempMessage + errorFG + 'Error:' + reset + ' Nothing to log.');
+
+			return false;
+		}
+
+		if (type !== undefined) {
+			switch (type) {
+				case 'Alert:':
+					tempConsoleMessage = ' ' + alertBG + lightFG;
+					break;
+				case 'Critical:':
+					tempConsoleMessage = ' ' + critFG;
+					break;
+				case 'Debug:':
+					tempConsoleMessage = ' ' + debugBG + darkFG;
+					break;
+				case 'Emergency:':
+					tempConsoleMessage = ' ' + emergBG + lightFG;
+					break;
+				case 'Error:':
+					tempConsoleMessage = ' ' + errorFG;
+					break;
+				case 'Info:':
+					tempConsoleMessage = ' ' + infoFG;
+					break;
+				case 'Notice:':
+					tempConsoleMessage = ' ' + noticeFG;
+					break;
+				case 'Warning:':
+					tempConsoleMessage = ' ' + warningBG + darkFG;
+					break;
+				default:
+					// Do nothing..
+					break;
 			}
+		} else {
+			type = '';
+		}
+
+		if (format && format === 'json') {
+			console.log(tempMessage + tempConsoleMessage + type + reset + ' ' + JSON.stringify(data));
+			log.write(tempMessage + type + JSON.stringify(data) + '\n');
+		} else if (format && format === 'pretty') {
+			console.log(tempMessage + tempConsoleMessage + type + reset + ' ' + JSON.stringify(data, undefined, 2));
+			log.write(tempMessage + type + JSON.stringify(data, undefined, 2) + '\n');
+		} else {
+			console.log(tempMessage + tempConsoleMessage + type + reset + ' ' + data);
+			log.write(tempMessage + type + data + '\n');
 		}
 	};
 
 	return {
-		alert: function(log = eventLog, data, type) {
-			return loggr(log, 'Alert: ' + data, type);
+		alert: function(log = eventLog, data, format) {
+			return loggr(log, data, format, 'Alert:');
 		},
-		crit: function(log = eventLog, data, type) {
-			return loggr(log, 'Critical: ' + data, type);
+		crit: function(log = eventLog, data, format) {
+			return loggr(log, data, format, 'Critical:');
 		},
-		debug: function(log = eventLog, data, type) {
-			return loggr(log, 'Debug: ' + data, type);
+		debug: function(log = eventLog, data, format) {
+			return loggr(log, data, format, 'Debug:');
 		},
-		emerg: function(log = eventLog, data, type) {
-			return loggr(log, 'Emergency: ' + data, type);
+		emerg: function(log = eventLog, data, format) {
+			return loggr(log, data, format, 'Emergency:');
 		},
-		err: function(log = eventLog, data, type) {
-			return loggr(log, 'Error: ' + data, type);
+		err: function(log = eventLog, data, format) {
+			return loggr(log, data, format, 'Error:');
 		},
-		info: function(log = eventLog, data, type) {
-			return loggr(log, 'Info: ' + data, type);
+		info: function(log = eventLog, data, format) {
+			return loggr(log, data, format, 'Info:');
 		},
-		log: function (log = eventLog, data, type) {
-			return loggr(log, data, type);
+		log: function (log = eventLog, data, format) {
+			return loggr(log, data, format);
 		},
-		notice: function(log = eventLog, data, type) {
-			return loggr(log, 'Notice: ' + data, type);
+		notice: function(log = eventLog, data, format) {
+			return loggr(log, data, format, 'Notice:');
 		},
-		warning: function(log = eventLog, data, type) {
-			return loggr(log, 'Warning: ' + data, type);
+		warning: function(log = eventLog, data, format) {
+			return loggr(log, data, format, 'Warning:');
 		}
 	};
 }();
