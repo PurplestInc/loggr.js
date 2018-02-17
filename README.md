@@ -17,7 +17,7 @@ Used to log data to a write stream while also logging it to the console so that 
 
 ## Installing
 ```javascript
-npm install loggr.js
+npm install --save loggr.js
 ```
 
 ## Example
