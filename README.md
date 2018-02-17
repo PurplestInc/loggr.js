@@ -32,6 +32,9 @@ const accessLog = fs.createWriteStream(path.join(__dirname, 'access.log'), { fla
 // Default, will log to an event.log file.
 loggr.log(data);
 
+// Exprected result example:
+// [mm/dd/yyyy @ hh:mm:ss:fff a] - value of data variable
+
 // Normal, pass in a destination WriteStream.
 loggr.log(accessLog, data);
 
@@ -68,6 +71,7 @@ These are future capabilites that we intend to add.
 **In Progress**
 
 - Allow users to choose color combination for the styled console messages.
+- Allow for different timestamp formats.
 
 **Untouched**
 
@@ -75,11 +79,10 @@ These are future capabilites that we intend to add.
   - Add separate logs for severity of messages by default and have the logger log messages to them as well as any specified log by default.
 - **Timing**
   - Speed up logging.
-  - Allow for different timestamp formats.
 
 ## Credits
 
-loggr.js was inspired by the `console.log();` functionality with the intention of adding a precise timestamp and preserving the logs for future reference. Rather than just logging to the console users should be able to log to any WriteStream they provide for enhancing their workflow such as an `access.log`, a `transaction.log`, a `download.log`, etc. Allowing users to easily log data to WriteStreams that make sense for their workflow.
+loggr.js was inspired by the `console.log();` functionality with the intention of adding a precise timestamp and preserving the logs for future reference. Rather than just logging to the console users should be able to log to any WriteStream they provide for enhancing their workflow such as an `access.log`, a `transaction.log`, a `download.log`, etc. Allowing users to easily log data to WriteStreams that make sense for their workflow. Another goal of the project is to help provide a mostly standardized approach to logging so that the logs can be easily consumed and parsed to find specific details. As with all things the final goal of the project is to help users save time so that they will "have more time" to allocate toward whatever they want.
 
 ## License
 
