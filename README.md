@@ -24,7 +24,7 @@ npm install loggr.js
 ```javascript
 const fs = require('fs');
 const path = require('path');
-const loggr = require('loggr');
+const loggr = require('loggr.js');
 const accessLog = fs.createWriteStream(path.join(__dirname, 'access.log'), { flags: 'a' });
 
 ... // Your code with an variable "data" that has some value.
