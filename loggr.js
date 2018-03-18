@@ -2,16 +2,16 @@
  * @fileoverview loggr.js a simple logging utility.
  * @author Rob Dukarski <rob@purplest.com>
  * @copyright 2018 Purplest, Inc.
- * @version 1.1.0
+ * @version 1.1.2
  * @exports loggr
  */
 
-module.exports = function() {
+module.exports = function () {
   'use strict';
 
   const fs = require('fs');
   const path = require('path');
-  const eventLog = fs.createWriteStream(path.join(__dirname, 'event.log'), { flags: 'a' });
+  const eventLog = fs.createWriteStream(path.join(__dirname + '/../../logs/', 'event.log'), { flags: 'a' });
   const now = () => process.hrtime(startTime)[1]/1000000;
   const startDate = new Date();
 	const startTime = process.hrtime();
@@ -66,7 +66,7 @@ module.exports = function() {
 		let tempDay = tempDate.getDate();
 		let tempHours = tempDate.getHours();
 		let tempMinutes = tempDate.getMinutes();
-		let tempMonth = tempDate.getMonth();
+		let tempMonth = tempDate.getMonth() + 1;
 		let tempPeriod = 'AM';
 		let tempSeconds = tempDate.getSeconds();
 		let tempYear = tempDate.getFullYear();
@@ -111,13 +111,13 @@ module.exports = function() {
 		if (format !== undefined && !(format === 'json' || format === 'pretty')) {
 			format = undefined;
 
-			console.log(tempMessage + errorFG + 'Error:' + reset + ' Unrecognized format specified.');
+			console.log(tempMessage + errorFG + ' Error:' + reset + ' Unrecognized format specified.');
 
 			return false;
 		}
 
 		if (data === undefined) {
-			console.log(tempMessage + errorFG + 'Error:' + reset + ' Nothing to log.');
+			console.log(tempMessage + errorFG + ' Error:' + reset + ' Nothing to log.');
 
 			return false;
 		}
