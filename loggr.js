@@ -2,7 +2,7 @@
  * @fileoverview loggr.js a simple logging utility.
  * @author Rob Dukarski <rob@purplest.com>
  * @copyright 2018 Purplest, Inc.
- * @version 1.2.1
+ * @version 1.2.2
  * @exports loggr
  */
 
@@ -63,7 +63,7 @@ module.exports = function () {
 	}
 
 	const createLog = function (log) {
-		logs[log + 'Log'] = fs.createWriteStream(path.join('../../logs/', log + '.log'), { flags: 'a' });
+		logs[log + 'Log'] = fs.createWriteStream(path.join(dir, log + '.log'), { flags: 'a' });
 	};
 
 	const recolorLog = function (type, color) {
