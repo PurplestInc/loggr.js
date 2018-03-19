@@ -2,14 +2,14 @@
  * @fileoverview loggr.js a simple logging utility.
  * @author Rob Dukarski <rob@purplest.com>
  * @copyright 2018 Purplest, Inc.
- * @version 1.2.0
+ * @version 1.2.1
  * @exports loggr
  */
 
 module.exports = function () {
   'use strict';
 
-	const dir = '../../logs/';
+	const dir = __dirname + '/../../logs/';
   const fs = require('fs');
   const path = require('path');
   const now = () => process.hrtime(startTime)[1]/1000000;
