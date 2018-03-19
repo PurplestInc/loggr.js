@@ -43,26 +43,39 @@ loggr.log(accessLog, data, 'json');
 
 // Pretty printed JSON
 loggr.log(accessLog, data, 'pretty');
+
+// Have loggr.js create the log.
+loggr.create('error');
+
+loggr.err('error', data);
+
+// Have loggr.js recolor a log.
+loggr.recolor.alert('\x1b[42m');
+
+loggr.alert(data); // Should output a message with the severity notice using a
+                   // green background to the console.
 ```
 
 ## loggr.js API
 
 Styling the console messages, potentially based on message severity, is possible using different logging helper functions.
 
-| Function                                        | Severity          | Style (BG/FG or FG) | Description                                    |
-| ----------------------------------------------- | ----------------- | ------------------- | ---------------------------------------------- |
-| `loggr.emerg(data);`                            | Emergency (0)     | Red/White           | Process is unstable.                           |
-| `loggr.alert(data);`                            | Alert (1)         | Blue/White          | Must take action immediately.                  |
-| `loggr.crit(data);`                             | Critical (2)      | Yellow              | Process is in critical condition.              |
-| `loggr.err(data);`                              | Error (3)         | Red                 | An error has occurred with process.            |
-| `loggr.warning(data);`                          | Warning (4)       | Yellow/Black        | An unexpected condition occurred with process. |
-| `loggr.notice(data);`                           | Notice (5)        | White               | Other normal condition occurred with process.  |
-| `loggr.info(data);`                             | Informational (6) | Cyan                | An informational message.                      |
-| `loggr.debug(data);`                            | Debug (7)         | Green/Black         | Messages used for debugging.                   |
-| `loggr.log(data);`                              | Default (8)       | Default             | Just a normal message.                         |
+| Function                                        | Severity          | Style (BG/FG or FG) | Description                                                             |
+| ----------------------------------------------- | ----------------- | ------------------- | ----------------------------------------------------------------------- |
+| `loggr.emerg(data);`                            | Emergency (0)     | Red/White           | Process is unstable.                                                    |
+| `loggr.alert(data);`                            | Alert (1)         | Blue/White          | Must take action immediately.                                           |
+| `loggr.crit(data);`                             | Critical (2)      | Yellow              | Process is in critical condition.                                       |
+| `loggr.err(data);`                              | Error (3)         | Red                 | An error has occurred with process.                                     |
+| `loggr.warning(data);`                          | Warning (4)       | Yellow/Black        | An unexpected condition occurred with process.                          |
+| `loggr.notice(data);`                           | Notice (5)        | White               | Other normal condition occurred with process.                           |
+| `loggr.info(data);`                             | Informational (6) | Cyan                | An informational message.                                               |
+| `loggr.debug(data);`                            | Debug (7)         | Green/Black         | Messages used for debugging.                                            |
+| `loggr.log(data);`                              | Default (8)       | Default             | Just a normal message.                                                  |
+| `loggr.create(data);`                           | N/A               | N/A                 | Creates 'data' log for future use.                                      |
+| `loggr.recolor.severity(data);`                 | N/A               | N/A                 | Changes the color for the 'severity' notice for a non-default log type. |
 
 
-> **Note:** Next minor revision will allow for choosing your own color combination for the styled console messages.
+> **Note:** With `loggr.recolor.severity` you need to change "severity" to the function name for the serverity type of log. For example, "Error" would be `loggr.recolor.err()`.
 
 ## Roadmap
 
@@ -70,13 +83,10 @@ These are future capabilites that we intend to add.
 
 **In Progress**
 
-- Allow users to choose color combination for the styled console messages.
 - Allow for different timestamp formats.
 
 **Untouched**
 
-- **Logging**
-  - Add separate logs for severity of messages by default and have the logger log messages to them as well as any specified log by default.
 - **Timing**
   - Speed up logging.
 
