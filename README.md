@@ -36,7 +36,7 @@ loggr.log(data);
 // [mm/dd/yyyy @ hh:mm:ss:fff a] - value of data variable
 
 // Normal, pass in a destination WriteStream.
-loggr.log(accessLog, data);
+loggr.log(accessLog, data); // Should output to access.log
 
 // JSON
 loggr.log(accessLog, data, 'json');
@@ -44,16 +44,18 @@ loggr.log(accessLog, data, 'json');
 // Pretty printed JSON
 loggr.log(accessLog, data, 'pretty');
 
-// Have loggr.js create the log.
-loggr.create('error');
+// Have loggr.js create the log so you do not have to require fs and path
+// separately.
+loggr.create('trigger');
 
-loggr.err('error', data);
+loggr.log('trigger', data); // Should output to /logs/trigger.log
 
 // Have loggr.js recolor a log.
 loggr.recolor.alert('\x1b[42m');
 
 loggr.alert(data); // Should output a message with the severity notice using a
-                   // green background to the console.
+									 // green background to the console and the message to
+									 // /logs/alert.log.
 ```
 
 ## loggr.js API
