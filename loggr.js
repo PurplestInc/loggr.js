@@ -2,7 +2,7 @@
  * @fileoverview loggr.js a simple logging utility.
  * @author Rob Dukarski <rob@purplest.com>
  * @copyright 2018 Purplest, Inc.
- * @version 1.2.4
+ * @version 1.2.5
  * @exports loggr
  */
 
@@ -23,6 +23,21 @@ module.exports = function () {
 	let updateTime = updateDate().getTime();
 
 	/**
+	 * Adds a zero if necessary.
+	 *
+	 * @param   {Integer} int - Number to check
+	 * @returns {Any}         - String or Number
+	 */
+
+	const zeroify = function (int) {
+		if (int < 10) {
+			int = '0' + int;
+		}
+
+		return int;
+	};
+
+	/**
 	 * Creates a log directory if it does not already exsist.
 	 *
 	 * @returns {String} - Directory
@@ -38,7 +53,7 @@ module.exports = function () {
 			let tempDay = zeroify(tempDate.getDate());
 			let tempDir = dir;
 			let tempDirectories = '';
-			let tempMonth = zerofity(tempDate.getMonth() + 1);
+			let tempMonth = zeroify(tempDate.getMonth() + 1);
 			let tempYear = tempDate.getFullYear();
 
 			if (!fs.existsSync(tempDir)) {
@@ -138,21 +153,6 @@ module.exports = function () {
 	let noticeFG = lightFG;
 	let reset = '\x1b[0m';
 	let warningBG = '\x1b[43m' + darkFG;
-
-	/**
-	 * Adds a zero if necessary.
-	 *
-	 * @param   {Integer} int - Number to check
-	 * @returns {Any}         - String or Number
-	 */
-
-	const zeroify = function (int) {
-		if (int < 10) {
-			int = '0' + int;
-		}
-
-		return int;
-	};
 
 	/**
 	 * Creates a new log.

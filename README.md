@@ -81,7 +81,7 @@ Styling the console messages, potentially based on message severity, is possible
 
 ## Roadmap
 
-**Latest Publish**
+**Latest Feature**
 
 - Automatically rotate logs everyday, i.e. `logs/2018/04/11` (yyyy/mm/dd).
 
