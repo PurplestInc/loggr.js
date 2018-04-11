@@ -17,7 +17,7 @@ Used to log data to a write stream while also logging it to the console so that 
 
 ## Installing
 ```javascript
-npm install --save loggr.js
+npm i loggr.js
 ```
 
 ## Example
@@ -54,8 +54,8 @@ loggr.log('trigger', data); // Should output to /logs/trigger.log
 loggr.recolor.alert('\x1b[42m');
 
 loggr.alert(data); // Should output a message with the severity notice using a
-									 // green background to the console and the message to
-									 // /logs/alert.log.
+                   // green background to the console and the message to
+                   // /logs/alert.log.
 ```
 
 ## loggr.js API
@@ -81,7 +81,11 @@ Styling the console messages, potentially based on message severity, is possible
 
 ## Roadmap
 
-These are future capabilites that we intend to add.
+**Latest Publish**
+
+- Automatically rotate logs everyday, i.e. `logs/2018/04/11` (yyyy/mm/dd).
+
+These are future capabilites that we intend to add:
 
 **In Progress**
 
@@ -91,6 +95,8 @@ These are future capabilites that we intend to add.
 
 - **Timing**
   - Speed up logging.
+- **Website**
+  - Develop the landing page for the project.
 
 ## Credits
 
